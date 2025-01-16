@@ -1,4 +1,27 @@
 %% Plotting
+set(0,'DefaultAxesFontName','Arial');
+
+fs_label = 20;
+fs_tick_small = 15;
+fs_tick_medium = 18;
+fs_legend = 15;
+fs_title = 22; 
+
+%% Plotting for all Results
+
+% Draw the result at Experiment 1 & 2
+Color_Darkgray = [25 25 25]/255;
+Color_Gray = [100 100 100]/255;
+
+Color_Yellow = [245 213 71]/255; %% yellow
+Color_Orange = [237 125 49]/255; %% orange
+
+Color_Navy = [20 70 160]/255; %% navy
+Color_SkyBlue = [90 180 220]/255; %% sky blue
+
+color_yb = [44, 102, 107; 101, 173, 178; 215, 149, 79; 236, 186, 101; 240, 214, 98]/255;
+Hz2s= [120 144 160 180 240 288];
+
 
 figure('Color',[1 1 1])
 % Experiment 1 (72Hz)
