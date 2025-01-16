@@ -147,3 +147,216 @@ set(gcf, 'Units', 'centimeters', 'Position', [0, 0, 20, 10], 'PaperUnits', 'cent
 
 print(gcf,'Exp4_all.png','-dpng','-r300')
 print(gcf,'Exp4_all.svg','-dsvg','-r300')
+
+%% Supplementary Plot
+% Experiment 1,2
+
+figure('Color',[1 1 1])
+for i = 1:7
+    subplot(4,4,2*i-1)
+    plot(Hz2s/2,conThresExp0(i,1:6),'Color',Color_Darkgray,'Marker','s','LineWidth',1.5,'MarkerFaceColor',Color_Darkgray,'MarkerSize',6); hold on
+    plot(Hz2s/2,conThresh_Moving1(i,1:6),'Color',Color_Yellow,'LineWidth',3,'MarkerFaceColor',Color_Yellow); hold on
+    plot(Hz2s/2,conThresh_UNIST1(i,1:6),'Color',Color_SkyBlue,'LineWidth',3,'MarkerFaceColor',Color_SkyBlue); hold on
+
+    plot(Hz2s(4:6)/2,conThresExp2(i,4:6),'Color',Color_Gray,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_Gray,'MarkerSize',6); hold on
+    plot(Hz2s(4:6)/2,conThresh_Moving2(i,4:6),'Color',Color_Yellow,'LineWidth',3,'MarkerFaceColor',Color_Yellow); hold on
+    plot(Hz2s(4:6)/2,conThresh_UNIST2(i,4:6),'Color',Color_SkyBlue,'LineWidth',3,'MarkerFaceColor',Color_SkyBlue); hold on
+
+    ylim([0 1])
+    xlim([50 150]);
+    xticks([]);
+    box off
+    set(gca,'FontSize',15,'LineWidth',1.5)
+    if mod(i,2) == 1
+        ylabel('Contrast threshold')
+    end
+    if i == 7
+        ax = gca;
+        ax.XTick = Hz2s/2;
+        ax.XTickLabel = '';
+        myLabels = { '72', '72', '72', '72', '72','72'; 
+            '\downarrow', '\downarrow', '\downarrow', '\downarrow','\downarrow','\downarrow';
+            '60', '72', '80','90','120','144'};
+        for idx = 1:length(myLabels)
+            text(Hz2s(idx)/2, ax.YLim(1), sprintf('%s\n%s\n%s', myLabels{:,idx}), ...
+                'horizontalalignment', 'center', 'verticalalignment', 'top','Fontsize',10);    
+        end
+        ax.XLabel.String = sprintf('\n\n%s', 'First epoch \rightarrow Second Epoch (Hz)');
+    end
+
+    subplot(4,4,2*i)
+    exp1_obs = plot(Hz2s(1:3)/2,conThresExp2(i,7:9),'Color',Color_Gray,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_Gray,'MarkerSize',6); hold on
+    exp2_obs = plot(Hz2s/2,conThresExp0(i,7:12),'Color',Color_Darkgray,'Marker','s','LineWidth',1.5,'MarkerFaceColor',Color_Darkgray,'MarkerSize',6); hold on
+    exp1_estGaus =plot(Hz2s/2,conThresh_Moving1(i,7:12),'Color',Color_Yellow,'LineWidth',3,'MarkerFaceColor',Color_Yellow); hold on
+    exp2_estGaus = plot(Hz2s(1:3)/2,conThresh_Moving2(i,7:9),'Color',Color_Yellow,'LineWidth',3,'MarkerFaceColor',Color_Yellow); hold on
+    exp1_estBi = plot(Hz2s/2,conThresh_UNIST1(i,7:12),'Color',Color_SkyBlue,'LineWidth',3,'MarkerFaceColor',Color_SkyBlue); hold on
+    exp2_estBi = plot(Hz2s(1:3)/2,conThresh_UNIST2(i,7:9),'Color',Color_SkyBlue,'LineWidth',3,'MarkerFaceColor',Color_SkyBlue); hold on
+    ylim([0 1])
+    xlim([50 150]);
+    xticks([]);
+    box off
+    set(gca,'FontSize',15,'LineWidth',1.5)
+    if i == 7
+        ax = gca;
+        ax.XTick = Hz2s/2;
+        ax.XTickLabel = '';
+        myLabels = { '120', '120', '120', '120', '120','120'; 
+            '\downarrow', '\downarrow', '\downarrow', '\downarrow','\downarrow','\downarrow';
+            '60', '72', '80','90','120','144'};
+        for idx = 1:length(myLabels)
+            text(Hz2s(idx)/2, ax.YLim(1), sprintf('%s\n%s\n%s', myLabels{:,idx}), ...
+                'horizontalalignment', 'center', 'verticalalignment', 'top','Fontsize',10);    
+        end
+        legend([exp1_obs, exp1_estGaus, exp1_estBi, exp2_obs, exp2_estGaus, exp2_estBi],{'Exp1 Obs','Exp1 Pred(G)','Exp1 Pred(Bi)','Exp2 Obs','Exp2 Pred(G)','Exp2 Pred(Bi)'},'Location','southeast','FontSize',8)
+        legend box off
+    end
+ end
+set(gcf, 'Units', 'centimeters', 'Position', [0, 0, 40, 50], 'PaperUnits', 'centimeters', 'PaperSize', [40, 50]);
+set(0,'DefaultAxesFontName', 'Arial');
+print(gcf,'Subject_Exp12.png','-dpng','-r300')
+
+
+
+% Experiment 3
+figure('Color',[1 1 1])
+idx = 0:13;
+for i = 1:11
+    subplot(3,4,i)
+    sort_i = I1(12-i);
+    plot(idx, thres_Exp3(sort_i,:),'Color',Color_Darkgray,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_Darkgray,'MarkerSize',6); hold on
+    plot(idx,conThresh_Moving3(sort_i,:),'Color',Color_Yellow,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_Yellow,'MarkerSize',6); hold on
+    plot(idx,conThresh_UNIST3(sort_i,:),'Color',Color_SkyBlue,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_SkyBlue,'MarkerSize',6); hold on
+    ylim([0 1])
+    xlim([0 14]);
+    xticks(idx);
+    if mod(i,4) == 1
+        ylabel('Contrast Threshold')
+    end
+    box off
+    set(gca,'FontSize',15,'LineWidth',1.5)
+end
+set(0,'DefaultAxesFontName', 'Arial');
+set(gcf, 'Units', 'centimeters', 'Position', [0, 0, 40, 30], 'PaperUnits', 'centimeters', 'PaperSize', [40, 30]);
+print(gcf,'Subject_Exp3.png','-dpng','-r300')
+
+
+% Experiment 4
+figure('Color',[1 1 1])
+idx = 0:8;
+for i = 1:11
+    subplot(3,4,i)
+    sort_i = I2(i);
+    plot(idx, thres_Exp4(sort_i,:),'Color',Color_Darkgray,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_Darkgray,'MarkerSize',6); hold on
+    plot(idx,conThresh_Moving4(sort_i,:),'Color',Color_Yellow,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_Yellow,'MarkerSize',6); hold on
+    plot(idx,conThresh_UNIST4(sort_i,:),'Color',Color_SkyBlue,'Marker','o','LineWidth',1.5,'MarkerFaceColor',Color_SkyBlue,'MarkerSize',6); hold on
+    ylim([0 1])
+    xlim([0 9]);
+    xticks(idx);
+    if mod(i,3) == 1
+        ylabel('Contrast Threshold')
+    end
+    box off
+    set(gca,'FontSize',15,'LineWidth',1.5)
+end
+set(0,'DefaultAxesFontName', 'Arial');
+set(gcf, 'Units', 'centimeters', 'Position', [0, 0, 40, 30], 'PaperUnits', 'centimeters', 'PaperSize', [40, 30]);
+print(gcf,'Subject_Exp4.png','-dpng','-r300')
+
+
+%% Plotting the iRF
+
+% From Burr's Studies
+params_burr = [1 5.67 4.99 17.9];
+xt = dt:dt:0.5;
+burr_irf = params_burr(1).*xt.*sin(2*pi.*(params_burr(2).*xt.*((xt+1).^(-params_burr(3))))).*exp(-xt.*params_burr(4));
+burr_irf = burr_irf/sum(abs(burr_irf));
+
+% From our model
+mean_bi1 = mean(best_params_bi1);
+mean_bi2 = mean(best_params_bi2);
+mean_bi3 = mean(best_params_bi3);
+mean_gau1 = mean(best_params_gau1);
+mean_gau2 = mean(best_params_gau2);
+mean_gau3 = mean(best_params_gau3);
+
+% Draw the filters
+origin_gau = draw_irf(params0,2);
+gau1 = draw_irf(mean_gau1,1);
+gau2 = draw_irf(mean_gau2,1);
+gau3 = draw_irf(mean_gau3,1);
+
+% Fit the Size
+% max_length_gau = length(gau3);
+origin_gau = nonzeros(round(origin_gau,5));
+gau1 = nonzeros(round(gau1,5));
+gau2 = nonzeros(round(gau2,5));
+gau3 = nonzeros(round(gau3,5));
+
+x_gau0 = dt:dt:dt*length(origin_gau);
+x_gau1 = dt:dt:dt*length(gau1);
+x_gau2 = dt:dt:dt*length(gau2);
+x_gau3 = dt:dt:dt*length(gau3);
+
+origin_bi = draw_irf([1 1 1],3);
+bi1 = draw_irf(mean_bi1,3);
+bi2 = draw_irf(mean_bi2,3);
+bi3 = draw_irf(mean_bi3,3);
+
+origin_bi = nonzeros(round(origin_bi,5));
+bi1 = nonzeros(round(bi1,5));
+bi2 = nonzeros(round(bi2,5));
+bi3 = nonzeros(round(bi3,5));
+
+x_bi0 = dt:dt:dt*length(origin_bi);
+x_bi1 = dt:dt:dt*length(bi1);
+x_bi2 = dt:dt:dt*length(bi2);
+x_bi3 = dt:dt:dt*length(bi3);
+
+Color1 = [128 58 21]/255;
+Color2 =  [68 171 73]/255;
+Color3 = [109 59 171]/255;
+
+% Plotting the filters
+figure('Color',[1 1 1])
+subplot(121)
+p1 = plot(xt, burr_irf,'k','LineWidth', 2); hold on
+p4 = plot(x_gau3, gau3,'Color', Color3, 'LineWidth', 2);
+yticks([0]);
+ylim([0 max(gau3)*1.5])
+legend([p1 p4],{'Burr & Morrone, 1993','Exp 4'},'Location','northeast');
+legend box off
+box off
+xlabel('Time (Sec)')
+ylabel('Response (AU)')
+set(gca,'FontSize',15,'LineWidth',1.5)
+
+
+% x_bi = dt:dt:1;
+subplot(122)
+yline(0,'k','LineWidth',2); hold on
+p1 = plot(x_bi0,origin_bi,'k','LineWidth', 2); hold on
+p2 = plot(x_bi1,bi1,'Color', Color1, 'LineWidth', 2); hold on
+p3 = plot(x_bi2, bi2,'Color', Color2, 'LineWidth', 2); hold on
+legend([p1 p2 p3],{'Kelly, 1961, 8500 td', 'Exp 1 + 2', 'Exp 3'});
+legend box off
+xlim([0 0.5])
+yticks([0]);
+box off
+xlabel('Time (Sec)')
+ylabel('Response (AU)')
+
+set(gca,'FontSize',15,'LineWidth',1.5)
+set(0,'DefaultAxesFontName', 'Arial');
+set(gcf, 'Units', 'centimeters', 'Position', [0, 0, 30, 15], 'PaperUnits', 'centimeters', 'PaperSize', [30, 15]);
+
+print(gcf,'Filter.png','-dpng','-r300')
+
+
+% Test the difference of filter shape
+[fg_h12, fg_pv12, fg_ci12, fg_stat12] = ttest(best_params_gau1(:,1),params0(2))
+[fg_h3, fg_pv3, fg_ci3, fg_stat3] = ttest(best_params_gau2(:,1),params0(2))
+[fg_h4, fg_pv4, fg_ci4, fg_stat4] = ttest(best_params_gau3(:,1),params0(2))
+
+[fb_h12, fb_pv12, fb_ci12, fb_stat12] = ttest(best_params_bi1(:,1),1)
+[fb_h3, fb_pv3, fb_ci3, fb_stat3] = ttest(best_params_bi2(:,1),1)
+[fb_h4, fb_pv4, fb_ci4, fb_stat4] = ttest(best_params_bi3(:,1),1)
